@@ -1,3 +1,5 @@
+// A server for use with OpenShift's NodeJS cartridge.
+
 var http = require("http"),
     url = require("url"),
     path = require("path"),
@@ -27,7 +29,7 @@ http.createServer(function(request, response) {
         return;
       }
 
-      response.writeHead(200);
+      response.writeHead(200, {"File-Extension": filename.split(".").pop()});
       response.write(file, "binary");
       response.end();
     });
