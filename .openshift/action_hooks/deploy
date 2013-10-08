@@ -1,6 +1,6 @@
 #!/bin/bash
 
 cd $OPENSHIFT_REPO_DIR
-# Dumb.
-rm -fr node_modules; npm install
+# Also grab the dev deps so that we can use uglify.
+npm update
 make
