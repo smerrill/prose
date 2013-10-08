@@ -1,5 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 cd $OPENSHIFT_REPO_DIR
 make
-
