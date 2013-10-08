@@ -9,7 +9,7 @@ var http = require("http"),
 http.createServer(function(request, response) {
 
   var uri = url.parse(request.url).pathname
-    , filename = path.join(process.cwd(), uri);
+    , filename = path.join(process.cwd(), uri).replace(/\.\.\//g, '');
 
   fs.exists(filename, function(exists) {
     if(!exists) {
@@ -29,7 +29,31 @@ http.createServer(function(request, response) {
         return;
       }
 
-      response.writeHead(200, {"File-Extension": filename.split(".").pop()});
+      // Simple MIME type detection.
+      contentType = "text/plain"
+      switch(filename.split(".").pop()) {
+        case 'jpeg':
+        case 'jpg':
+          contentType = "image/jpeg";
+          break;
+        case 'gif':
+          contentType = "image/gif";
+          break;
+        case 'png':
+          contentType = "image/png";
+          break;
+        case 'js':
+          contentType = "application/x-javascript";
+          break;
+        case 'css':
+          contentType = "text/css";
+          break;
+        case 'html':
+        case 'htm':
+          contentType = "text/html";
+          break;
+      }
+      response.writeHead(200, {"Content-Type": contentType});
       response.write(file, "binary");
       response.end();
     });
