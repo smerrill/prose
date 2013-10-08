@@ -1,7 +1,6 @@
 #!/bin/bash
 
 cd $OPENSHIFT_REPO_DIR
-# Also grab the dev deps so that we can use uglify.
-npm config set development true
-npm update
+# Also grab uglify, since OpenShift does not install dev deps.
+npm install uglify-js
 make
